@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 
 createUser {{ snmp_user }} SHA {{ snmp_password }} AES {{ snmp_encryption }}
 

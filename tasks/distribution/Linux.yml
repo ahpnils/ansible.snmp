@@ -1,7 +1,7 @@
 ---
 # tasks file for sbaerlocher.snmp
 
-- name: 'linux : install snmp'
+- name: 'Linux : install snmp'
   become: true
   package:
     name: '{{ item }}'
@@ -11,14 +11,14 @@
   tags:
     - packages
 
-- name: 'linux : create snmp extension directory'
+- name: 'Linux : create snmp extension directory'
   become: true
   file:
     path: '{{ snmp_extension_scripts }}'
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
     seuser: system_u
     serole: object_r
     setype: lib_t
@@ -26,14 +26,14 @@
   tags:
     - configuration
 
-- name: 'linux : install snmp extension'
+- name: 'Linux : install snmp extension'
   become: true
   get_url:
     url: '{{ item.url }}'
     dest: '{{ snmp_extension_scripts + "/" }}'
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
     seuser: system_u
     serole: object_r
     setype: lib_t
@@ -43,14 +43,14 @@
   tags:
     - configuration
 
-- name: 'linux : install snmp extension proxmox'
+- name: 'Linux : install snmp extension proxmox'
   become: true
   get_url:
     url: 'https://raw.githubusercontent.com/librenms/librenms-agent/master/agent-local/proxmox'
     dest: '{{ snmp_extension_scripts + "/" }}'
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
     seuser: system_u
     serole: object_r
     setype: lib_t
@@ -59,14 +59,14 @@
   tags:
     - configuration
 
-- name: 'linux : configure snmpd daemon'
+- name: 'Linux : configure snmpd daemon'
   become: true
   template:
     src: 'default/snmpd.{{ ansible_os_family }}.j2'
     dest: '{{ snmp_daemon_config }}'
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     seuser: system_u
     serole: object_r
     setype: etc_t
@@ -74,14 +74,14 @@
   notify:
     - restart snmp
 
-- name: 'linux : check create snmp config'
+- name: 'Linux : check create snmp config'
   become: true
   template:
     src: 'snmp/snmpd.conf.j2'
     dest: '{{ snmp_config }}'
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
     seuser: system_u
     serole: object_r
     setype: etc_t
@@ -91,22 +91,26 @@
   tags:
     - configuration
 
-- block:
+- name: 'Linux : deploy snmp config' # noqa no-handler
+  when: check_snmp.changed
+  tags:
+    - configuration
+  block:
 
-    - name: 'linux : stopped snmp'
+    - name: 'Linux : stopped snmp'
       become: true
       service:
         name: '{{ snmp_service_name }}'
         state: stopped
 
-    - name: 'linux : create snmp config'
+    - name: 'Linux : create snmp config'
       become: true
       template:
         src: 'snmp/snmpd.conf.j2'
         dest: '{{ snmp_config }}'
         owner: root
         group: root
-        mode: 0600
+        mode: "0600"
         seuser: system_u
         serole: object_r
         setype: etc_t
@@ -115,12 +119,8 @@
         - restart snmp
         - enabled snmp
 
-    - name: 'linux : started snmp'
+    - name: 'Linux : started snmp'
       become: true
       service:
         name: '{{ snmp_service_name }}'
         state: started
-
-  when: check_snmp.changed
-  tags:
-    - configuration

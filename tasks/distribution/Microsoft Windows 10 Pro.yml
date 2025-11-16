@@ -2,14 +2,14 @@
 # tasks file for sbaerlocher.snmp
 
 - name: 'Windows : Install SNMP Client'
-  become_method: runas
+  become_method: ansible.builtin.runas
   become_user: System
-  become: yes
-  sbaerlocher.windows.win_capability:
+  become: true
+  sbaerlocher.Windows.win_capability:
     name: 'SNMP.Client~~~~0.0.1.0'
 
-- name: 'windows : setting SNMP'
-  win_regedit:
+- name: 'Windows : setting SNMP'
+  ansible.windows.win_regedit:
     path: 'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\SNMP\\Parameters\\{{ item.path }}'
     name: '{{ item.name }}'
     type: '{{ item.type }}'
@@ -34,28 +34,28 @@
   notify:
     - restart win snmp
 
-- name: 'windows : set remote IP-Adresss'
+- name: 'Windows : set remote IP-Adresss'
   set_fact:
-    snmp_remoteip: "{{ lookup('dig', snmp_monitoring_server ) }}"
+    snmp_remoteip: "{{ lookup('dig', snmp_monitoring_server) }}"
   when: not snmp_monitoring_server | ipaddr
 
-- name: 'windows : firewall rule to allow ICMP'
-  win_firewall_rule:
+- name: 'Windows : firewall rule to allow ICMP'
+  ansible.windows.win_firewall_rule:
     name: ICMP
     action: allow
     direction: in
     protocol: ICMPv4
-    remoteip: '{{ snmp_remoteip | default( snmp_monitoring_server ) }}'
+    remoteip: '{{ snmp_remoteip | default(snmp_monitoring_server) }}'
     state: present
     enabled: true
 
-- name: 'windows : firewall rule to allow SNMP-Service'
-  win_firewall_rule:
+- name: 'Windows : firewall rule to allow SNMP-Service'
+  ansible.windows.win_firewall_rule:
     name: SNMP
     action: allow
     direction: in
     protocol: UDP
     localport: '161'
-    remoteip: '{{ snmp_remoteip | default( snmp_monitoring_server ) }}'
+    remoteip: '{{ snmp_remoteip | default(snmp_monitoring_server) }}'
     state: present
     enabled: true

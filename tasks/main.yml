@@ -1,7 +1,7 @@
 ---
 # tasks file for sbaerlocher.snmp
 
-- name: add OS specific variables
+- name: Add OS specific variables
   include_vars: "{{ loop_vars }}"
   with_first_found:
     - files:
@@ -19,7 +19,7 @@
     - configuration
     - packages
 
-- name: include distribution tasks
+- name: Include distribution tasks
   include_tasks: "{{ loop_distribution }}"
   with_first_found:
     - files:

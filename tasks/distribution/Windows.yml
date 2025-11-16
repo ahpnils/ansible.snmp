@@ -12,21 +12,21 @@
   vars:
     dsc_state_query: "[*].installed"
 
-- name: 'windows : install SNMP with DSC'
-  win_dsc:
+- name: 'Windows : install SNMP with DSC'
+  ansible.windows.win_dsc:
     resource_name: "{{ snmp_resource_name }}"
     Name: "{{ snmp_name }}"
     Ensure: "{{ snmp_present }}"
   when: ansible_powershell_version >= 5 and dsc_install_status
 
-- name: 'windows : install SNMP without DSC'
-  win_feature:
+- name: 'Windows : install SNMP without DSC'
+  ansible.windows.win_feature:
     name: "{{ snmp_name }}"
     state: "{{ snmp_present }}"
   when: ansible_powershell_version <= 5 and not dsc_install_status
 
-- name: 'windows : setting SNMP'
-  win_regedit:
+- name: 'Windows : setting SNMP'
+  ansible.windows.win_regedit:
     path: 'HKLM:\SYSTEM\CurrentControlSet\Services\SNMP\Parameters\{{ item.path }}'
     name: '{{ item.name }}'
     type: '{{ item.type }}'
@@ -51,28 +51,28 @@
   notify:
     - restart win snmp
 
-- name: 'windows : set remote IP-Address'
+- name: 'Windows : set remote IP-Address'
   set_fact:
-    snmp_remoteip: "{{ lookup('dig', snmp_monitoring_server ) }}"
+    snmp_remoteip: "{{ lookup('dig', snmp_monitoring_server) }}"
   when: not snmp_monitoring_server | ipaddr
 
-- name: 'windows : firewall rule to allow ICMP'
-  win_firewall_rule:
+- name: 'Windows : firewall rule to allow ICMP'
+  ansible.windows.win_firewall_rule:
     name: ICMP
     action: allow
     direction: in
     protocol: ICMPv4
-    remoteip: '{{ snmp_remoteip | default( snmp_monitoring_server ) }}'
+    remoteip: '{{ snmp_remoteip | default(snmp_monitoring_server) }}'
     state: present
     enabled: true
 
-- name: 'windows : firewall rule to allow SNMP-Service'
-  win_firewall_rule:
+- name: 'Windows : firewall rule to allow SNMP-Service'
+  ansible.windows.win_firewall_rule:
     name: SNMP
     action: allow
     direction: in
     protocol: UDP
     localport: '161'
-    remoteip: '{{ snmp_remoteip | default( snmp_monitoring_server ) }}'
+    remoteip: '{{ snmp_remoteip | default(snmp_monitoring_server) }}'
     state: present
     enabled: true
