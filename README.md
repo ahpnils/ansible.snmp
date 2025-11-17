@@ -1,6 +1,14 @@
 # Ansible Role: SNMP
 
-[![Build Status](https://img.shields.io/travis/sbaerlocher/ansible.snmp.svg?branch=master&style=popout-square)](https://travis-ci.org/sbaerlocher/ansible.snmp) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=popout-square)](https://sbaerlo.ch/licence) [![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-snmp-blue.svg?style=popout-square)](https://galaxy.ansible.com/sbaerlocher/snmp) [![Ansible Role](https://img.shields.io/ansible/role/d/9234.svg?style=popout-square)](https://galaxy.ansible.com/sbaerlocher/snmp)
+[![ansible-lint.yml](https://github.com/ahpnils/ansible.snmp/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/ahpnils/ansible.snmp/actions/workflows/ansible-lint.yml)
+[![ansible-test.yml](https://github.com/ahpnils/ansible.snmp/actions/workflows/ansible-test.yml/badge.svg)](https://github.com/ahpnils/ansible.snmp/actions/workflows/ansible-test.yml)
+[![codespell.yml](https://github.com/ahpnils/ansible.snmp/actions/workflows/codespell.yml/badge.svg)](https://github.com/ahpnils/ansible.snmp/actions/workflows/codespell.yml)
+[![markdownlint.yml](https://github.com/ahpnils/ansible.snmp/actions/workflows/markdownlint.yml/badge.svg)](https://github.com/ahpnils/ansible.snmp/actions/workflows/markdownlint.yml)
+[![qemu-kvm-integration-tests.yml](https://github.com/ahpnils/ansible.snmp/actions/workflows/qemu-kvm-integration-tests.yml/badge.svg)](https://github.com/ahpnils/ansible.snmp/actions/workflows/qemu-kvm-integration-tests.yml)
+[![shellcheck.yml](https://github.com/ahpnils/ansible.snmp/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/ahpnils/ansible.snmp/actions/workflows/shellcheck.yml)
+[![tft.yml](https://github.com/ahpnils/ansible.snmp/actions/workflows/tft.yml/badge.svg)](https://github.com/ahpnils/ansible.snmp/actions/workflows/tft.yml)
+[![tft_citest_bad.yml](https://github.com/ahpnils/ansible.snmp/actions/workflows/tft_citest_bad.yml/badge.svg)](https://github.com/ahpnils/ansible.snmp/actions/workflows/tft_citest_bad.yml)
+[![woke.yml](https://github.com/ahpnils/ansible.snmp/actions/workflows/woke.yml/badge.svg)](https://github.com/ahpnils/ansible.snmp/actions/workflows/woke.yml)
 
 ## Description
 
@@ -9,7 +17,7 @@ Ansible role for installing and Configuration SNMP v3 on installs RHEL/CentOS or
 ## Installation
 
 ```bash
-ansible-galaxy install sbaerlocher.snmp
+ansible-galaxy install ahpnils.snmp
 ```
 
 ## Requirements
@@ -36,7 +44,7 @@ None
 ```yml
 - hosts: all
   roles:
-    - sbaerlocher.snmp
+    - ahpnils.snmp
 ```
 
 ## Changelog
@@ -87,14 +95,16 @@ None
 
 - Initial release
 
-## Author
+## Authors
 
 - [Simon Bärlocher](https://sbaerlocher.ch)
+- [Nils Ratusznik](https://anotherhomepage.org)
 
 ## License
 
-This project is under the MIT License. See the [LICENSE](https://sbaerlo.ch/licence) file for the full license text.
+This project is under the MIT License. See the [LICENSE](https://github.com/ahpnils/ansible.snmp/blob/master/LICENSE) file for the full license text.
 
 ## Copyright
 
-(c) 2018, Simon Bärlocher
+(c) 2018-2025, Simon Bärlocher
+(c) 2025, Nils Ratusznik

@@ -1,5 +1,5 @@
 ---
-# vars file for sbaerlocher.snmp
+# vars file for ahpnils.snmp
 
 snmp_resource_name: WindowsOptionalFeature
 snmp_name: SNMP

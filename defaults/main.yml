@@ -1,5 +1,5 @@
 ---
-# defaults file for sbaerlocher.snmp
+# defaults file for ahpnils.snmp
 
 snmp_additional_packages: []
 snmp_encryption: snmp_encryption
