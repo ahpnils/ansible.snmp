@@ -1,5 +1,5 @@
 ---
-# handlers file for sbaerlocher.snmp
+# handlers file for ahpnils.snmp
 
 - name: Restart snmp
   become: true
